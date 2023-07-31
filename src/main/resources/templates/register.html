@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <section class="inner_page_head">
+        <div class="container_fuild">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="full">
+                        <h3>Sign In</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="why_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="full">
+                        <form th:action="@{/register}" method="post" th:object="${customer}">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Enter your name" th:field="*{name}" />
+                                    <small th:if="${#fields.hasErrors('name')}" id="customerHelpId" class="form-text text-muted">Fullname is required or invalid</small>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" placeholder="Enter your email address"
+                                           th:field="*{email}" class="form-control" />
+                                    <small th:if="${#fields.hasErrors('email')}" id="email" class="form-text text-muted">Email is required or invalid</small>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password"  placeholder="Enter your password" th:field="*{password}">
+                                    <small th:if="${#fields.hasErrors('email')}" id="password" class="form-text text-muted">Password is required or invalid</small>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Enter your phone number" th:field="*{phone}" />
+                                </div>
+                                <button type="submit" class="btn btn-secondary">Register</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+</body>
+</html>
