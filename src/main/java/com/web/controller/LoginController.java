@@ -42,13 +42,13 @@ public class LoginController {
             return new ModelAndView("login", model);
         }
 
-//        session.setAttribute("username", account);
-//        Object ruri = session.getAttribute("redirect-uri");
-//        System.out.println("ruri login = " + ruri);
-//        if (ruri != null) {
-//            session.removeAttribute("redirect-uri");
-//            return new ModelAndView("redirect:" + ruri);
-//        }
+        session.setAttribute("username", account);
+        Object ruri = session.getAttribute("redirect-uri");
+        System.out.println("ruri login = " + ruri);
+        if (ruri != null) {
+            session.removeAttribute("redirect-uri");
+            return new ModelAndView("redirect:" + ruri);
+        }
         return new ModelAndView("forward:/home", model);
     }
 

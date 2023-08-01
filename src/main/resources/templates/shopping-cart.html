@@ -35,20 +35,22 @@
                             <tr th:each="item : ${cart}" >
                                 <td class="product__cart__item" >
                                     <div class="product__cart__item__text">
-                                        <h6 th:text="${item.name}"></h6>
+                                        <h6 th:text="${item.product.name}"></h6>
                                     </div>
                                 </td>
                                 <td class="product__cart__item" >
                                     <div class="product__cart__item__text">
-                                        <h6 th:text="${item.price}"></h6>
+                                        <h6 th:text="${item.product.price}"></h6>
                                     </div>
                                 </td>
                                 <td class="product__cart__item" >
                                     <div class="product__cart__item__pic" style="height: 130px;width:130px">
-                                        <img th:src="${'/img/product/' + item.image}" alt="">
+                                        <img th:src="${'/img/product/' + item.product.image}" alt="">
                                     </div>
                                 </td>
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                <td th:data-id="${item.product.id}" th:data-name="${item.product.name}"
+                                    onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))" class="cart__close"><a class="btn">
+                                    <i  class="fa fa-close"></i> </a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -81,6 +83,30 @@
                             <li>Total <span>$ 169.50</span></li>
                         </ul>
                         <a th:href="@{/checkout}" class="primary-btn">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function showConfirmModalDialog(id, name) {
+                $('#productName').text(name);
+                $('#yesOption').attr('href', '/cart/delete/' + id);
+                $('#confirmationId').modal('show');
+            }
+        </script>
+        <div id="confirmationId" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Xác nhận xóa</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có chắc chắn muốn xóa sản phẩm <span id="productName"></span> khỏi giỏ hàng?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="yesOption" class="btn btn-danger">Xóa</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                     </div>
                 </div>
             </div>
