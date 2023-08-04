@@ -12,12 +12,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO implements Serializable {
-    private Integer id;
+    private Long id;
     private String name;
     private String image;
     private Double price;
     private Date createDate;
     private Boolean available;
-    private Integer categoryId;
+    private Long categoryId;
 
 }

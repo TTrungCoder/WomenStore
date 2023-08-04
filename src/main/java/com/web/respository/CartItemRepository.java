@@ -1,7 +1,7 @@
 package com.web.respository;
 
 
-import com.web.domain.Authority;
+import com.web.domain.Account;
 import com.web.domain.CartItem;
 import com.web.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
-    List<CartItem> findByAuthority(Authority authority);
+    List<CartItem> findByAccount(Account account);
 
-    CartItem findByAuthorityAndProduct(Authority authority, Product product);
+    CartItem findByAccountAndProduct(Account account, Product product);
 
 
-    @Query("DELETE FROM CartItem c WHERE c.authority.id = ?1 AND c.product.id = ?2")
+    @Query("DELETE FROM CartItem c WHERE c.account.username = ?1 AND c.product.id = ?2")
     @Modifying
-    void deleteByCustomerAndProduct(Long authorityId, Long productId);
+    void deleteByAccountAndProduct(String username, Long productId);
 }

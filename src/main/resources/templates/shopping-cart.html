@@ -29,6 +29,7 @@
                                 <th>Product</th>
                                 <th>Price</th>
                                 <th>Image</th>
+                                <th>Quantity</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,12 +41,17 @@
                                 </td>
                                 <td class="product__cart__item" >
                                     <div class="product__cart__item__text">
-                                        <h6 th:text="${item.product.price}"></h6>
+                                        <h6 th:text="${item.totalPrice}"></h6>
                                     </div>
                                 </td>
                                 <td class="product__cart__item" >
                                     <div class="product__cart__item__pic" style="height: 130px;width:130px">
                                         <img th:src="${'/img/product/' + item.product.image}" alt="">
+                                    </div>
+                                </td>
+                                <td class="product__cart__item" >
+                                    <div class="product__cart__item__text">
+                                        <h6 th:text="${item.quantity}"></h6>
                                     </div>
                                 </td>
                                 <td th:data-id="${item.product.id}" th:data-name="${item.product.name}"
@@ -79,8 +85,8 @@
                     <div class="cart__total">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Subtotal <span>$ 169.50</span></li>
-                            <li>Total <span>$ 169.50</span></li>
+                            <li>Subtotal <span>0</span></li>
+                            <li>Total <span th:text="${grandTotal}"></span></li>
                         </ul>
                         <a th:href="@{/checkout}" class="primary-btn">Proceed to checkout</a>
                     </div>

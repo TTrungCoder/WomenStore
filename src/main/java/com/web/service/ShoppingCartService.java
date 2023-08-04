@@ -1,14 +1,15 @@
 package com.web.service;
 
-import com.web.domain.Authority;
+import com.web.domain.Account;
 import com.web.domain.CartItem;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
 public interface ShoppingCartService {
-    List<CartItem> findAll(Authority authority);
+    List<CartItem> findAll(UserDetails userDetails);
 
-    CartItem addToCart(Long productId, Integer quantity, Authority authority);
+    CartItem addToCart(Long productId, Integer quantity, UserDetails userDetails);
 
-    void removeProduct(Authority authority, Long productId);
+    void removeProduct(UserDetails userDetails, Long productId);
 }

@@ -12,8 +12,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public interface AccountService {
+
     //login
     Account login(String username, String password);
+
     <S extends Account> S save(S entity);
 
     <S extends Account> Optional<S> findOne(Example<S> example);

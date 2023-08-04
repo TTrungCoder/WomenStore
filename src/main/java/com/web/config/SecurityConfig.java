@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable();
         http.authorizeRequests()
+                .antMatchers("/cart/**").authenticated()
                 .antMatchers("/checkout/**").authenticated()
                 .antMatchers("/admin/**").hasAnyRole("RTAF","DIRE")
                 .antMatchers("/rest/authoritis").hasRole("DIRE")

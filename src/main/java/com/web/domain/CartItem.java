@@ -11,23 +11,23 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "CartItems")
+@Table(name = "cart_items")
 public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "productId")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "authority_id")
-    private Authority authority;
+    @JoinColumn(name = "accountId")
+    private Account account;
 
-    private int quantity;
+    private Integer quantity;
 
-    private double totalPrice;
+    private Double totalPrice;
 
     @Override
     public String toString() {
