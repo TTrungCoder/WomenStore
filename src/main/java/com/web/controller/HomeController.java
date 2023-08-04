@@ -91,10 +91,6 @@ public class HomeController {
 	public String blog() {
 		return "blog";
 	}
-	@GetMapping("/checkout")
-	public String checkout() {
-		return "checkout";
-	}
 	@GetMapping("/login")
 	public String login() {
 		return "login";

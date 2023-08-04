@@ -9,6 +9,7 @@ import com.web.respository.ProductRepository;
 import com.web.service.AccountService;
 import com.web.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -74,5 +75,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void removeProduct(UserDetails userDetails, Long productId) {
         String username = userDetails.getUsername();
         itemRepository.deleteByAccountAndProduct(username, productId);
+    }
+    @Override
+    public double calculateTotalPrice(List<CartItem> cartItems) {
+        return cartItems.stream()
+                .mapToDouble(cartItem -> cartItem.getProduct().getPrice() * cartItem.getQuantity())
+                .sum();
+    }
+    @Override
+    @Transactional
+    public void clearCart(UserDetails userDetails) {
+
+        String username = userDetails.getUsername();
+
+        // Sử dụng tên người dùng để lấy thông tin Account
+        Optional<Account> account = accountService.findById(username);
+
+        List<CartItem> cartItems = itemRepository.findByAccount(account.get());
+        itemRepository.deleteAll(cartItems);
     }
 }

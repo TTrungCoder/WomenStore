@@ -26,37 +26,41 @@
                         <table>
                             <thead>
                             <tr>
-                                <th>Product</th>
+                                <th>Date</th>
+                                <th>Address</th>
                                 <th>Price</th>
-                                <th>Image</th>
-                                <th>Quantity</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="item : ${cart}" >
+                            <tr th:each="item :  ${order}" >
                                 <td class="product__cart__item" >
                                     <div class="product__cart__item__text">
-                                        <h6 th:text="${item.product.name}"></h6>
-                                    </div>
-                                </td>
-                                <td class="product__cart__item" >
-                                    <div class="product__cart__item__text">
-                                        <h6 th:text="${item.totalPrice}"></h6>
-                                    </div>
-                                </td>
-                                <td class="product__cart__item" >
-                                    <div class="product__cart__item__pic" style="height: 130px;width:130px">
-                                        <img th:src="${'/img/product/' + item.product.image}" alt="">
+                                        <h6 th:text="${item.orderDate}"></h6>
                                     </div>
                                 </td>
                                 <td class="product__cart__item" >
                                     <div class="product__cart__item__text">
-                                        <h6 th:text="${item.quantity}"></h6>
+                                        <h6 th:text="${item.address}"></h6>
                                     </div>
                                 </td>
-                                <td th:data-id="${item.product.id}" th:data-name="${item.product.name}"
-                                    onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))" class="cart__close"><a class="btn">
-                                    <i  class="fa fa-close"></i> </a></td>
+                                <td class="product__cart__item" >
+                                    <div class="product__cart__item__text">
+                                        <h6 th:text="${item.amount}"></h6>
+                                    </div>
+                                </td>
+                                <td class="product__cart__item" >
+                                    <div class="product__cart__item__text">
+                                        <h6 th:text="${item.phone}"></h6>
+                                    </div>
+                                </td>
+                                <td class="product__cart__item" >
+                                    <div class="product__cart__item__text">
+                                        <h6 th:text="${item.status}"></h6>
+                                    </div>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -67,28 +71,6 @@
                                 <a th:href="@{/shop}">Continue Shopping</a>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="cart__discount">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Coupon code">
-                            <button type="submit">Apply</button>
-                        </form>
-                    </div>
-                    <div class="cart__total">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>Subtotal <span>0</span></li>
-                            <li>Total <span th:text="${grandTotal}"></span></li>
-                        </ul>
-                        <a th:href="@{/order/add}" class="primary-btn">Proceed to checkout</a>
                     </div>
                 </div>
             </div>

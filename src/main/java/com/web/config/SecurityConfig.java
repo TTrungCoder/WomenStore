@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/cart/**").authenticated()
-                .antMatchers("/checkout/**").authenticated()
+                .antMatchers("/order/**").authenticated()
                 .antMatchers("/admin/**").hasAnyRole("RTAF","DIRE")
                 .antMatchers("/rest/authoritis").hasRole("DIRE")
                 .anyRequest().permitAll();

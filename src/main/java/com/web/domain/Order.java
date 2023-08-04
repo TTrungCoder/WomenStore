@@ -1,20 +1,11 @@
 package com.web.domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,16 +18,41 @@ import lombok.Data;
 public class Order  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
-	String address;
+	private Long id;
+
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Createdate")
-	Date createDate = new Date();
+	private Date orderDate;
+
+	@Column(nullable = false)
+	private Double amount;
+
+	@Column(nullable = false)
+	private String status;
+
+	@Column(nullable = false)
+	private String address;
+
+	@Column(nullable = false)
+	private String phone;
+
 	@ManyToOne
-	@JoinColumn(name = "Username")
-	Account account;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "order")
-	List<OrderDetail> orderDetails;
+	@JoinColumn(name="accountId")
+	private Account account;
+
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private List<OrderDetail> orderDetails;
+
+	@Override
+	public String toString() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String formattedDate = dateFormat.format(orderDate);
+		return "Order{" +
+				"id=" + id +
+				", orderDate=" + formattedDate +
+				", amount=" +
+				", status=" +
+				", address=" +
+				", phone=" +
+				'}';
+	}
 }
