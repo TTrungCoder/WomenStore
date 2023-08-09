@@ -24,6 +24,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getTop12ProductsByPrice() {
+        return productRepository.findTop12ByOrderByPriceDesc();
+    }
+
+    @Override
     public List<Product> findByNameContaining(String name) {
         return productRepository.findByNameContaining(name);
     }

@@ -58,7 +58,7 @@ public class LoginController {
         session.removeAttribute("username");
 
         // Chuyển hướng về trang đăng nhập
-        return "redirect:/login";
+        return "redirect:/login/form";
     }
 
 }

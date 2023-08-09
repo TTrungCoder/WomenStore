@@ -33,12 +33,8 @@ public class HomeController {
 	private CategoryService categoryService;
 
 	@RequestMapping("")
-	public String index(ModelMap model,
-						@RequestParam(defaultValue = "0") int page,
-						@RequestParam(defaultValue = "9") int size) {
-
-        Pageable pageable = PageRequest.of(page, size);
-		List<Product> list = productService.findAll();
+	public String index(ModelMap model) {
+		List<Product> list = productService.getTop12ProductsByPrice();
 		model.addAttribute("products", list);
 		return "home";
 	}

@@ -50,21 +50,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/cart/**").authenticated()
                 .antMatchers("/order/**").authenticated()
-                .antMatchers("/admin/**").hasAnyRole("RTAF","DIRE")
-                .antMatchers("/rest/authoritis").hasRole("DIRE")
+                .antMatchers("/admin/**").hasAnyRole("STAF","DIRE")
                 .anyRequest().permitAll();
 
         http.formLogin()
                 .loginPage("/login/form")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/login/success",false)
+                .defaultSuccessUrl("/",false)
                 .failureUrl("/login/error");
 
         http.exceptionHandling()
                 .accessDeniedPage("/security/");
         http.logout()
                 .logoutUrl("/logoff")
-                .logoutSuccessUrl("/logoff/success");
+                .logoutSuccessUrl("/");
     }
     //co che ma hoa mk
     @Bean

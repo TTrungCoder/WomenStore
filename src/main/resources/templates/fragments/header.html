@@ -19,16 +19,9 @@
         <div class="col-lg-6 col-md-5">
           <div class="header__top__right">
             <div class="header__top__links">
-              <a th:href="@{/login/form}">Sign In</a>
-              <a href="#">FAQs</a>
-            </div>
-            <div class="header__top__hover">
-              <span>Usd <i class="arrow_carrot-down"></i></span>
-              <ul>
-                <li>USD</li>
-                <li>EUR</li>
-                <li>USD</li>
-              </ul>
+              <a th:if="${#request.getRemoteUser() == null}" th:href="@{/login/form}">Sign In</a>
+              <a th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}" th:href="@{/admin}">Admin</a>
+              <a th:if="${#request.getRemoteUser() != null}" th:href="@{/logoff}">Logout</a>
             </div>
           </div>
         </div>
@@ -48,7 +41,7 @@
             <li class=""><a th:href="@{/}">Home</a></li>
             <li><a  th:href="@{/shop}">Shop</a></li>
             <li><a th:href="@{/blog}">Blog</a></li>
-            <li><a th:href="@{/order}">Check Out</a></li>
+            <li><a th:href="@{/order}">Order List</a></li>
           </ul>
         </nav>
       </div>

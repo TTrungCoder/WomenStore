@@ -80,16 +80,17 @@ public class OrderController {
         order.setPhone(phone);
         order.setAccount(account.get());
 
+        // Lưu đơn hàng vào cơ sở dữ liệu (hoặc thực hiện các thao tác khác liên quan đến đặt hàng)
+        orderService.saveOrder(order);
+
         for (CartItem cartItem : cartItems) {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setProduct(cartItem.getProduct());
             orderDetail.setQuantity(cartItem.getQuantity());
             orderDetail.setUnitPrice(cartItem.getProduct().getPrice());
+            orderDetail.setOrder(order);
             orderService.addOrderDetail(orderDetail);
         }
-
-        // Lưu đơn hàng vào cơ sở dữ liệu (hoặc thực hiện các thao tác khác liên quan đến đặt hàng)
-        orderService.saveOrder(order);
 
         // Xóa giỏ hàng sau khi đã đặt hàng thành công
         shoppingCartService.clearCart(userDetails);

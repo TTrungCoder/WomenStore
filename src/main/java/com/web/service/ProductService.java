@@ -80,6 +80,8 @@ public interface ProductService {
 
     <S extends Product> S save(S entity);
 
+    List<Product> getTop12ProductsByPrice();
+
     List<Product> findByNameContaining(String name);
 
     Page<Product> findAllByNameLike(String name, Pageable pageable);
