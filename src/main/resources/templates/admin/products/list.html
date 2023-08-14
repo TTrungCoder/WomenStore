@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/home.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+</head>
+<body>
+<section layout:fragment="content">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">List Product</h1>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="col">
+      <div class=" row d-none d-sm-inline-block form-inline mt-3 mb-2 navbar-search" style="width:40%">
+        <form th:action="@{/admin/products/search}">
+          <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small"
+                   placeholder="Search for..." aria-label="Search"
+                   aria-describedby="basic-addon2" id="name" name="name">
+            <div class="input-group-append">
+              <button class="btn btn-primary">
+                <i class="fas fa-search fa-sm"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-header py-3 float-right">
+        <h6 class="m-0 font-weight-bold text-primary">Data Tables</h6>
+      </div>
+    </div>
+    <div class="card-body">
+      <div th:if="${message != null}" class="alert alert-primary" role="alert">
+        <i>[[${message}]]</i>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%"
+               cellspacing="0">
+          <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Discount</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="item : ${products}">
+            <td>
+              <img height="100px" width="100px" th:src="${item.image != null ? '/admin/products/images/' + item.image : '/admin/image/noimage.jpg' }" alt="">
+            </td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.unitPrice}"></td>
+            <td th:text="${item.discount}"></td>
+            <td th:text="${item.category.name}"></td>
+            <td th:text="${item.status}"></td>
+            <td>
+              <a th:href="@{'/admin/products/edit/' + ${item.id}}" type="button" class="btn btn-warning">Edit</a>
+              <a th:data-id="${item.id}" th:data-name="${item.name}"
+                 onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+                 class="btn btn-outline-danger ">Delete</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" th:href="@{'/admin/products?pageNumber=0'}">First</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" th:href="@{'/admin/products?pageNumber=' + ${products.number - 1}}"
+                 th:disabled="${products.number <= 0}" th:if="${products.number > 0}">&laquo;</a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link" th:text="${products.number + 1}"></a>
+            </li>
+            <li class="page-item">
+            <li class="page-item">
+              <a class="page-link" th:href="@{'/admin/products?pageNumber=' + ${products.number + 1}}"
+                 th:if="${products.number < (products.getTotalPages() - 1)}"
+                 th:disabled="${products.number >= (products.getTotalPages() - 1)}"
+              >&raquo;</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" th:href="@{'/admin/products?pageNumber='+${products.getTotalPages() - 1}}">Last</a>
+            </li>
+          </ul>
+        </nav>
+        <script>
+          function showConfirmModalDialog(id, name) {
+            $('#productName').text(name);
+            $('#yesOption').attr('href', '/admin/products/delete/' + id);
+            $('#confirmationId').modal('show');
+          }
+        </script>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Do you want to delete "<span id="productName"></span> " ?
+              </div>
+              <div class="modal-footer">
+                <a id="yesOption" type="button" class="btn btn-warning">Yes</a>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

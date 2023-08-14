@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/home.html}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+  <h1 th:text="${product.isEdit? 'Edit Product' : 'Add New Product'}" class="h3 mb-2 text-gray-800 mt-5"></h1>
+
+  <div class="row">
+    <div class="col-12">
+      <form th:action="@{/admin/products/saveOrUpdate}" method="post" th:object="${product}"
+            enctype="multipart/form-data">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <input th:field="*{id}" class="form-control" type="hidden"
+                         placeholder="Product ID" readonly>
+                  <label>Name: </label>
+                  <input th:field="*{name}" class="form-control" type="text"
+                         placeholder="Name" >
+                  <small th:if="${#fields.hasErrors('name')}">Name is required or invalid</small>
+                </div>
+
+                <div class="form-group">
+                  <label>Quantity: </label>
+                  <input th:field="*{quantity}" class="form-control" type="text"
+                         placeholder="Quantity" >
+                  <small th:if="${#fields.hasErrors('quantity')}">Quantity is required or invalid</small>
+                </div>
+                <div class="form-group">
+                  <label>Unit Price: </label>
+                  <input th:field="*{unitPrice}" class="form-control" type="text"
+                         placeholder="Unit Price">
+                  <small th:if="${#fields.hasErrors('unitPrice')}">Price is required or invalid</small>
+                </div>
+                <div class="form-group">
+                  <label>Category: </label>
+                  <select class="form-control" name="categoryId" th:field="*{categoryId}">
+                    <option th:each="item : ${categories}" th:value="${item.id}"
+                            th:text="${item.name}" th:selected="${item.id == product.categoryId}">
+                    </option>
+                  </select>
+                  <small th:if="${#fields.hasErrors('categoryId')}">Category ID is required or invalid</small>
+                </div>
+              </div>
+              <div class="col-4">
+                <script>
+                  function chooseFile(fileInput) {
+                    if(fileInput.files && fileInput.files[0]) {
+                      const reader = new FileReader();
+
+                      reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
+                      }
+
+                      reader.readAsDataURL(fileInput.files[0]);
+                    }
+                  }
+                </script>
+                <div>
+                  <img id="image" th:src="${product.image != null ? '/admin/products/images/' + product.image : '/admin/img/noimage.jpg' }" style="width: 100%; height: 250px;" class="img-fluid" alt="">
+                </div>
+                <div class="form-group">
+                  <label>Image File: </label>
+                  <input type=file onchange="chooseFile(this)" class="form-control-file" name="imageFile" id="productImage"
+                         placeholder="Image" aria-describedby="productImage" th:field="*{imageFile}"/>
+                  <input type="hidden" th:field="*{image}">
+                  <small th:if="${#fields.hasErrors('image')}">Image is required or
+                    invalid</small>
+                </div>
+                <div class="form-group">
+                  <label>Discount: </label>
+                  <input th:field="*{discount}" class="form-control" type="text"
+                         placeholder="Unit Price">
+                  <small th:if="${#fields.hasErrors('discount')}">Discount is required or
+                    invalid</small>
+                </div>
+                <div class="form-group">
+                  <label>Status: </label>
+                  <select class="form-control" name="categoryId" id="categoryId"
+                          th:field="*{status}">
+                    <option value="0">Out of Stock</option>
+                    <option value="1">On Sale</option>
+                    <option value="2">Featured</option>
+                    <option value="3">BestSeller</option>
+                    <option value="4">Out of Order</option>
+                    <option value="5">Limited Edition</option>
+                    <option value="6">None</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Description: </label>
+                  <textarea th:field="*{description}" class="form-control" type="text"
+                            placeholder="Description" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="reset" class="btn btn-info">Reset</button>
+            <button class="btn btn-primary" th:text="${product.isEdit ? 'Update' : 'Save'}"></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+</body>
+</html>

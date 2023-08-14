@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/home.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800 mt-4">List Category</h1>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="col">
+            <div class=" row d-none d-sm-inline-block form-inline mt-3 mb-2 navbar-search" style="width:40%">
+                <form th:action="@{/admin/categories/search}">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small"
+                               placeholder="Search for..." aria-label="Search"
+                               aria-describedby="basic-addon2" id="name" name="name">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-header py-3 float-right">
+                <h6 class="m-0 font-weight-bold text-primary">Data Tables</h6>
+            </div>
+        </div>
+        <div class="card-body">
+            <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                <i>[[${message}]]</i>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%"
+                       cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" category: ${categories}">
+                        <td th:text="${category.id}"></td>
+                        <td th:text="${category.name}"></td>
+                        <td>
+                            <a th:href="@{'/admin/categories/edit/' + ${category.id}}" type="button" class="btn btn-warning">Edit</a>
+                            <a th:data-id="${category.id}" th:data-name="${category.name}"
+                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+                               class="btn btn-outline-danger ">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <script>
+                    function showConfirmModalDialog(id, name) {
+                        $('#productName').text(name);
+                        $('#yesOption').attr('href', '/admin/categories/delete/' + id);
+                        $('#confirmationId').modal('show');
+                    }
+                </script>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirmation</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you want to delete "<span id="productName"></span> " ?
+                            </div>
+                            <div class="modal-footer">
+                                <a id="yesOption" type="button" class="btn btn-warning">Yes</a>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
