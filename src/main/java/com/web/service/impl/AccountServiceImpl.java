@@ -9,7 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -25,6 +31,17 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+
+    @Override
+    public void loginFromOAuth2(OAuth2AuthenticationToken oauth2) {
+        String fullname = oauth2.getPrincipal().getAttribute("name");
+        String password = Long.toHexString(System.currentTimeMillis());
+
+        UserDetails user = User.withUsername(fullname)
+                .password(bCryptPasswordEncoder.encode(password)).roles("CUST").build();
+        Authentication auth = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
 
     //login
     @Override

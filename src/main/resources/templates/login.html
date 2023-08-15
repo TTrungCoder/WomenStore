@@ -8,31 +8,39 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <section class="why_section layout_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <div class="full" style="margin-top: 150px; margin-bottom: 100px">
-                        <form class="user" modelAttribute="account" th:action="@{/login}" th:object="${account}" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{username}"
-                                       aria-describedby="username"
-                                       placeholder="Username"/>
-                                <small th:if="${#fields.hasErrors('username')}" id="username"
-                                       class="form-text text-muted">Username is invalid</small>
+    <section class="vh-80">
+        <div class="container py-5 h-80">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <form class="card-body p-5 text-center" modelAttribute="account" th:action="@{/login}" th:object="${account}" method="post">
+
+                            <h3 class="mb-5">Sign in</h3>
+
+                            <div class="form-outline mb-4">
+                                <input type="text"  th:field="*{username}" class="form-control form-control-lg" placeholder="Username"/>
+
                             </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control form-control-user"
-                                       id="exampleInputPassword" placeholder="Password" th:field="*{password}"/>
-                                <small th:if="${#fields.hasErrors('password')}" id="password"
-                                       class="form-text text-muted">Password is invalid</small>
+
+                            <div class="form-outline mb-4">
+                                <input type="password" id="typePasswordX-2" th:field="*{password}" class="form-control form-control-lg" placeholder="Password" />
                             </div>
-                            <div th:if="${message != null}" class="alert alert-primary" role="alert">
-                                <i>[[${message}]]</i>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-start mb-4">
+                                <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+                                <label class="form-check-label" for="form1Example3"> Remember password </label>
                             </div>
-                            <button class="btn btn-primary btn-user btn-block">
-                                Login
-                            </button>
+
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+                            <hr class="my-4">
+
+                            <a href="/oauth2/authorization/google" class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;"
+                                    type="submit">Sign in with google</a>
+                            <a href="/oauth2/authorization/facebook" class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998;"
+                                    type="submit">Sign in with facebook</a>
+
                         </form>
                     </div>
                 </div>

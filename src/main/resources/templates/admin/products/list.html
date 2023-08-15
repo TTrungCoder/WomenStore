@@ -42,9 +42,7 @@
           <tr>
             <th>Image</th>
             <th>Name</th>
-            <th>Quantity</th>
             <th>Unit Price</th>
-            <th>Discount</th>
             <th>Category</th>
             <th>Status</th>
             <th>Action</th>
@@ -53,14 +51,12 @@
           <tbody>
           <tr th:each="item : ${products}">
             <td>
-              <img height="100px" width="100px" th:src="${item.image != null ? '/admin/products/images/' + item.image : '/admin/image/noimage.jpg' }" alt="">
+              <img height="100px" width="100px" th:src="${item.image != null ? '/admin/products/images/' + item.image : '/admin/img/noimage.jpg' }" alt="">
             </td>
             <td th:text="${item.name}"></td>
-            <td th:text="${item.quantity}"></td>
-            <td th:text="${item.unitPrice}"></td>
-            <td th:text="${item.discount}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.price}"></td>
             <td th:text="${item.category.name}"></td>
-            <td th:text="${item.status}"></td>
             <td>
               <a th:href="@{'/admin/products/edit/' + ${item.id}}" type="button" class="btn btn-warning">Edit</a>
               <a th:data-id="${item.id}" th:data-name="${item.name}"

@@ -11,8 +11,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -28,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Lazy
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    GoogleOAuth2SuccessHandler googleOAuth2SuccessHandler;
 
     //cung cap nguon du lieu
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
@@ -58,6 +72,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/",false)
                 .failureUrl("/login/error");
+        http.oauth2Login()
+                .loginPage("/oauth2/login/form")
+                .defaultSuccessUrl("/oauth2/login/success",true)
+                .failureUrl("/oauth2/login/error")
+                .successHandler(googleOAuth2SuccessHandler);
 
         http.exceptionHandling()
                 .accessDeniedPage("/security/");
@@ -70,4 +89,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     BCryptPasswordEncoder getBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

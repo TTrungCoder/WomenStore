@@ -19,5 +19,6 @@ public class ProductDTO implements Serializable {
     private Date createDate;
     private Boolean available;
     private Long categoryId;
+    private Boolean isEdit = false;
 
 }

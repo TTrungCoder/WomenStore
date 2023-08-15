@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class CategoryDTO implements Serializable {
     private String id;
     private String name;
+    private Boolean isEdit = false;
 
 }
 

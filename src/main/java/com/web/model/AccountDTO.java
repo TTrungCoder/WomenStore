@@ -20,6 +20,7 @@ public class AccountDTO implements Serializable {
     private String fullname;
     private String email;
     private String photo;
+    private Boolean isEdit = false;
 
 }
 

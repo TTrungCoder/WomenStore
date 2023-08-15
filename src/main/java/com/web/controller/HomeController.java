@@ -82,7 +82,10 @@ public class HomeController {
         return "shop";
 	}
 
-	
+	@GetMapping("/admin")
+	public String admin() {
+		return "admin/home";
+	}
 	@GetMapping("/blog")
 	public String blog() {
 		return "blog";
